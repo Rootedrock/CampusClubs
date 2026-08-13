@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusClubs | Student Club Directory</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-theme">
+
+    <!-- ================= BACKGROUND ================= -->
+    <div class="background">
+        <div class="blob blob-one"></div>
+        <div class="blob blob-two"></div>
+        <div class="blob blob-three"></div>
+    </div>
+
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+
+        <div class="container nav-container">
+
+            <a href="#" class="logo">
+                Campus<span>Clubs</span>
+            </a>
+
+            <div class="nav-right">
+
+                <ul class="nav-links" id="nav-links">
+                    <li>
+                        <a href="#directory">Directory</a>
+                    </li>
+
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+
+                    <li>
+                        <a href="#faq">FAQ</a>
+                    </li>
+                </ul>
+
+                <button
+                    id="theme-toggle"
+                    class="theme-btn"
+                    aria-label="Toggle theme"
+                >
+                    <i data-lucide="sun"></i>
+                </button>
+
+                <button
+                    id="mobile-toggle"
+                    class="mobile-btn"
+                    aria-label="Open navigation"
+                >
+                    <i data-lucide="menu"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+
+        <div class="container hero-content">
+
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                Campus community • 2026
+            </div>
+
+            <h1>
+                Find your
+                <span class="gradient-text">people.</span>
+            </h1>
+
+            <p>
+                Explore student clubs, discover new interests,
+                meet like-minded people and make your campus
+                experience more memorable.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#directory" class="btn btn-primary">
+                    Explore Clubs
+                    <i data-lucide="arrow-down"></i>
+                </a>
+
+                <a href="#suggest" class="btn btn-secondary">
+                    Suggest a Club
+                    <i data-lucide="plus"></i>
+                </a>
+
+            </div>
+
+            <div class="hero-stats">
+
+                <div class="stat">
+                    <strong>12+</strong>
+                    <span>Active Clubs</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat">
+                    <strong>4</strong>
+                    <span>Categories</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat">
+                    <strong>500+</strong>
+                    <span>Students</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+    <main>
+
+        <!-- ================= DIRECTORY ================= -->
+        <section id="directory" class="directory-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label">DISCOVER</span>
+
+                        <h2>
+                            Explore campus clubs
+                        </h2>
+
+                        <p>
+                            Find something you're passionate about.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Search -->
+                <div class="search-container">
+
+                    <div class="search-box">
+
+                        <i data-lucide="search"></i>
+
+                        <input
+                            type="text"
+                            id="search-input"
+                            placeholder="Search clubs..."
+                            autocomplete="off"
+                        >
+
+                        <kbd>⌘ K</kbd>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Filters -->
+                <div class="filter-container">
+
+                    <button
+                        class="filter-btn active"
+                        data-category="all"
+                    >
+                        All Clubs
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="technical"
+                    >
+                        <i data-lucide="code-2"></i>
+                        Technical
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="cultural"
+                    >
+                        <i data-lucide="palette"></i>
+                        Cultural
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="sports"
+                    >
+                        <i data-lucide="trophy"></i>
+                        Sports
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="social"
+                    >
+                        <i data-lucide="users"></i>
+                        Social
+                    </button>
+
+                </div>
+
+
+                <!-- Club Grid -->
+                <div class="club-grid" id="club-grid">
+
+
+                    <!-- CLUB 1 -->
+                    <article
+                        class="club-card"
+                        data-category="technical"
+                        data-name="coding club"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon purple">
+                                <i data-lucide="code-2"></i>
+                            </div>
+
+                            <span class="category technical">
+                                Technical
+                            </span>
+
+                        </div>
+
+                        <h3>Coding Club</h3>
+
+                        <p>
+                            Build projects, solve problems and
+                            improve your programming skills together.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Wednesday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                4:00 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 2 -->
+                    <article
+                        class="club-card"
+                        data-category="technical"
+                        data-name="robotics club"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon blue">
+                                <i data-lucide="bot"></i>
+                            </div>
+
+                            <span class="category technical">
+                                Technical
+                            </span>
+
+                        </div>
+
+                        <h3>Robotics Club</h3>
+
+                        <p>
+                            Design, build and program robots while
+                            learning electronics and automation.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Tuesday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                5:00 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 3 -->
+                    <article
+                        class="club-card"
+                        data-category="cultural"
+                        data-name="music society"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon pink">
+                                <i data-lucide="music"></i>
+                            </div>
+
+                            <span class="category cultural">
+                                Cultural
+                            </span>
+
+                        </div>
+
+                        <h3>Music Society</h3>
+
+                        <p>
+                            Sing, perform and collaborate with
+                            musicians across campus.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Friday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                4:30 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 4 -->
+                    <article
+                        class="club-card"
+                        data-category="sports"
+                        data-name="football club"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon green">
+                                <i data-lucide="trophy"></i>
+                            </div>
+
+                            <span class="category sports">
+                                Sports
+                            </span>
+
+                        </div>
+
+                        <h3>Football Club</h3>
+
+                        <p>
+                            Train, compete and represent the campus
+                            in football tournaments.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Monday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                5:30 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 5 -->
+                    <article
+                        class="club-card"
+                        data-category="social"
+                        data-name="photography club"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon orange">
+                                <i data-lucide="camera"></i>
+                            </div>
+
+                            <span class="category social">
+                                Social
+                            </span>
+
+                        </div>
+
+                        <h3>Photography Club</h3>
+
+                        <p>
+                            Capture campus life and learn photography,
+                            editing and visual storytelling.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Thursday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                3:30 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 6 -->
+                    <article
+                        class="club-card"
+                        data-category="cultural"
+                        data-name="dance society"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon red">
+                                <i data-lucide="sparkles"></i>
+                            </div>
+
+                            <span class="category cultural">
+                                Cultural
+                            </span>
+
+                        </div>
+
+                        <h3>Dance Society</h3>
+
+                        <p>
+                            Learn different dance styles and perform
+                            at college festivals and events.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Saturday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                2:00 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 7 -->
+                    <article
+                        class="club-card"
+                        data-category="social"
+                        data-name="drama club"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon yellow">
+                                <i data-lucide="drama"></i>
+                            </div>
+
+                            <span class="category social">
+                                Social
+                            </span>
+
+                        </div>
+
+                        <h3>Drama Club</h3>
+
+                        <p>
+                            Act, write and produce performances for
+                            the campus community.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Wednesday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                6:00 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+
+                    <!-- CLUB 8 -->
+                    <article
+                        class="club-card"
+                        data-category="sports"
+                        data-name="basketball club"
+                    >
+
+                        <div class="card-top">
+
+                            <div class="club-icon cyan">
+                                <i data-lucide="circle-dot"></i>
+                            </div>
+
+                            <span class="category sports">
+                                Sports
+                            </span>
+
+                        </div>
+
+                        <h3>Basketball Club</h3>
+
+                        <p>
+                            Practice together, compete in tournaments
+                            and stay active on campus.
+                        </p>
+
+                        <div class="card-info">
+
+                            <span>
+                                <i data-lucide="calendar"></i>
+                                Thursday
+                            </span>
+
+                            <span>
+                                <i data-lucide="clock"></i>
+                                5:00 PM
+                            </span>
+
+                        </div>
+
+                        <button class="club-link">
+                            View Club
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+
+                    </article>
+
+                </div>
+
+
+                <!-- No Results -->
+                <div id="no-results" class="no-results hidden">
+
+                    <i data-lucide="search-x"></i>
+
+                    <h3>No clubs found</h3>
+
+                    <p>
+                        Try a different search term or category.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CLUB SPOTLIGHT ================= -->
+        <!-- Static section, no JS required -->
+        <section id="spotlight" class="spotlight-section">
+
+            <div class="container">
+
+                <span class="section-label">CLUB OF THE MONTH</span>
+
+                <div class="spotlight-card">
+
+                    <div class="spotlight-icon">
+                        <i data-lucide="bot"></i>
+                    </div>
+
+                    <div class="spotlight-content">
+
+                        <h2>Robotics Club</h2>
+
+                        <p>
+                            This month's spotlight goes to the Robotics
+                            Club for their standout work building and
+                            programming autonomous bots — proof that a
+                            small, consistent team can punch well above
+                            its weight.
+                        </p>
+
+                        <ul class="spotlight-achievements">
+
+                            <li>
+                                <i data-lucide="trophy"></i>
+                                1st place at the Inter-College Robotics
+                                Challenge
+                            </li>
+
+                            <li>
+                                <i data-lucide="trophy"></i>
+                                Built and demoed a line-following bot
+                                for the campus open house
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ABOUT ================= -->
+        <section id="about" class="about-section">
+
+            <div class="container">
+
+                <div class="about-card">
+
+                    <div class="about-icon">
+                        <i data-lucide="users"></i>
+                    </div>
+
+                    <div>
+                        <span class="section-label">WHY CAMPUSCLUBS?</span>
+
+                        <h2>
+                            Find more than a club.
+                            Find your community.
+                        </h2>
+
+                        <p>
+                            CampusClubs makes it easier for students
+                            to discover organizations that match
+                            their interests, meet new people and
+                            get involved in campus life.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SUGGEST ================= -->
+        <section id="suggest" class="suggest-section">
+
+            <div class="container">
+
+                <div class="suggest-card">
+
+                    <div class="suggest-content">
+
+                        <span class="section-label">
+                            GROW THE COMMUNITY
+                        </span>
+
+                        <h2>
+                            Don't see your club?
+                        </h2>
+
+                        <p>
+                            Suggest a student organization and help
+                            other students discover it.
+                        </p>
+
+                    </div>
+
+
+                    <form id="suggest-form" class="suggest-form">
+
+                        <div class="form-group">
+
+                            <label for="clubName">
+                                Club Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="clubName"
+                                placeholder="e.g. Chess Club"
+                            >
+
+                            <small id="nameError" class="error">
+                                Please enter a club name.
+                            </small>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Contact Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="you@example.com"
+                            >
+
+                            <small id="emailError" class="error">
+                                Please enter a valid email.
+                            </small>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="category">
+                                Category
+                            </label>
+
+                            <select id="category">
+                                <option value="" selected disabled>
+                                    Select a category
+                                </option>
+                                <option value="technical">Technical</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="sports">Sports</option>
+                                <option value="social">Social</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="description">
+                                Why should this be added?
+                            </label>
+
+                            <textarea
+                                id="description"
+                                rows="4"
+                                placeholder="Tell us about the club..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary full-width"
+                        >
+                            Submit Suggestion
+                            <i data-lucide="send"></i>
+                        </button>
+
+                    </form>
+
+
+                    <div
+                        id="form-success"
+                        class="form-success hidden"
+                    >
+
+                        <div class="success-icon">
+                            <i data-lucide="check"></i>
+                        </div>
+
+                        <h3>Suggestion submitted!</h3>
+
+                        <p>
+                            Thanks for helping improve the campus directory.
+                        </p>
+
+                        <button
+                            id="reset-form"
+                            class="btn btn-secondary"
+                        >
+                            Submit another
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FAQ ================= -->
+        <section id="faq" class="faq-section">
+
+            <div class="container">
+
+                <div class="section-heading centered">
+
+                    <span class="section-label">FAQ</span>
+
+                    <h2>
+                        Frequently asked questions
+                    </h2>
+
+                    <p>
+                        Everything you need to know about CampusClubs.
+                    </p>
+
+                </div>
+
+
+                <div class="faq-list">
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            <span>
+                                How do I join a club?
+                            </span>
+
+                            <i data-lucide="chevron-down"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Select a club from the directory and
+                                contact its organizers for information
+                                about meetings and membership.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            <span>
+                                Can I suggest a new club?
+                            </span>
+
+                            <i data-lucide="chevron-down"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Yes. Use the suggestion form above to
+                                submit your club for consideration.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            <span>
+                                Are the clubs free to join?
+                            </span>
+
+                            <i data-lucide="chevron-down"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Membership policies vary by club.
+                                Contact the individual organization
+                                for details.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            <span>
+                                Can I join multiple clubs?
+                            </span>
+
+                            <i data-lucide="chevron-down"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Absolutely. Students can participate
+                                in multiple organizations as long as
+                                they can manage the commitment.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faq-item">
+
+                        <button class="faq-question">
+
+                            <span>
+                                Is there a membership fee?
+                            </span>
+
+                            <i data-lucide="chevron-down"></i>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <p>
+                                Most clubs are free to join. A few with
+                                extra costs, like equipment or travel,
+                                may ask for a small contribution — check
+                                with the club directly.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div>
+
+                <a href="#" class="logo">
+                    Campus<span>Clubs</span>
+                </a>
+
+                <p>
+                    Discover. Connect. Belong.
+                </p>
+
+            </div>
+
+            <p class="copyright">
+                © 2026 CampusClubs. Built for students.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
