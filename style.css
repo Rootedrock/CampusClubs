@@ -228,17 +228,17 @@ a {
 }
 
 .logo {
-
-    font-size: 1.35rem;
-
-    font-weight: 800;
-
-    letter-spacing: -0.8px;
+    display: flex;
+    align-items: center;
+    width: 155px;
+    height: 55px;
 }
 
-.logo span {
-
-    color: var(--primary-light);
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .nav-right {
