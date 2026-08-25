@@ -1,0 +1,89 @@
+[
+  {
+    "id": "coding-club",
+    "name": "Coding Club",
+    "category": "Technical",
+    "description": "Build projects, solve problems and improve your programming skills together.",
+    "meetingDay": "Wednesday",
+    "meetingTime": "4:00 PM",
+    "memberCount": 64,
+    "isClubOfTheMonth": false
+  },
+  {
+    "id": "robotics-club",
+    "name": "Robotics Club",
+    "category": "Technical",
+    "description": "Design, build and program robots while learning electronics and automation.",
+    "meetingDay": "Tuesday",
+    "meetingTime": "5:00 PM",
+    "memberCount": 41,
+    "isClubOfTheMonth": true,
+    "spotlight": {
+      "summary": "This month's spotlight goes to the Robotics Club for their standout work building and programming autonomous bots — proof that a small, consistent team can punch well above its weight.",
+      "highlights": [
+        "1st place at the Inter-College Robotics Challenge",
+        "Built and demoed a line-following bot for the campus open house"
+      ]
+    }
+  },
+  {
+    "id": "music-society",
+    "name": "Music Society",
+    "category": "Cultural",
+    "description": "Sing, perform and collaborate with musicians across campus.",
+    "meetingDay": "Friday",
+    "meetingTime": "4:30 PM",
+    "memberCount": 58,
+    "isClubOfTheMonth": false
+  },
+  {
+    "id": "football-club",
+    "name": "Football Club",
+    "category": "Sports",
+    "description": "Train, compete and represent the campus in football tournaments.",
+    "meetingDay": "Monday",
+    "meetingTime": "5:30 PM",
+    "memberCount": 73,
+    "isClubOfTheMonth": false
+  },
+  {
+    "id": "photography-club",
+    "name": "Photography Club",
+    "category": "Social",
+    "description": "Capture campus life and learn photography, editing and visual storytelling.",
+    "meetingDay": "Thursday",
+    "meetingTime": "3:30 PM",
+    "memberCount": 39,
+    "isClubOfTheMonth": false
+  },
+  {
+    "id": "dance-society",
+    "name": "Dance Society",
+    "category": "Cultural",
+    "description": "Learn different dance styles and perform at college festivals and events.",
+    "meetingDay": "Saturday",
+    "meetingTime": "2:00 PM",
+    "memberCount": 52,
+    "isClubOfTheMonth": false
+  },
+  {
+    "id": "drama-club",
+    "name": "Drama Club",
+    "category": "Social",
+    "description": "Act, write and produce performances for the campus community.",
+    "meetingDay": "Wednesday",
+    "meetingTime": "6:00 PM",
+    "memberCount": 34,
+    "isClubOfTheMonth": false
+  },
+  {
+    "id": "basketball-club",
+    "name": "Basketball Club",
+    "category": "Sports",
+    "description": "Practice together, compete in tournaments and stay active on campus.",
+    "meetingDay": "Thursday",
+    "meetingTime": "5:00 PM",
+    "memberCount": 47,
+    "isClubOfTheMonth": false
+  }
+]
