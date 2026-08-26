@@ -8,7 +8,7 @@
  *   Replace API_BASE_URL with your Render URL, for example:
  *   https://campusclubs-backend.onrender.com
  */
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = "https://campusclubs-w3gp.onrender.com";
 
 async function apiRequest(path, options = {}) {
     const response = await fetch(`${API_BASE_URL}${path}`, {
