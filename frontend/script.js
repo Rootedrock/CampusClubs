@@ -244,9 +244,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const stats = document.querySelectorAll(".hero-stats .stat strong");
 
-            if (stats[0]) stats[0].textContent = `${data.activeClubs}+`;
+            if (stats[0]) stats[0].textContent = data.activeClubs;
             if (stats[1]) stats[1].textContent = data.categories;
-            if (stats[2]) stats[2].textContent = `${data.students}+`;
+            if (stats[2]) stats[2].textContent = data.students;
+            if (stats[3]) stats[3].textContent = data.suggestions ?? "—";
         } catch (error) {
             console.error("Could not load stats:", error);
             // Keep the HTML values if the backend is unavailable.
@@ -389,6 +390,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 reason: description
             });
 
+            await loadStats();
+
             suggestForm.reset();
             suggestForm.classList.add("hidden");
             formSuccess.classList.remove("hidden");
@@ -460,4 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initializeCampusClubs();
+
+    // Refresh shared counters while the page is open so submissions from
+    // other visitors appear without requiring a page reload.
+    window.setInterval(() => {
+        if (!document.hidden) loadStats();
+    }, 15000);
 });

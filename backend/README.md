@@ -5,7 +5,7 @@ A REST API backend for the [CampusClubs](https://rootedrock.github.io/CampusClub
 - The directory grid, `⌘K` search, and category filters (Technical / Cultural / Sports / Social)
 - Individual club detail pages
 - The "Club of the Month" spotlight
-- The "12+ Active Clubs / 4 Categories / 500+ Students" stats banner
+- Live counts for active clubs, categories, students, and submitted suggestions
 - The "Suggest a Club" form, including validation and an admin view of submissions
 
 Built with **Node.js + Express** and a dependency-free JSON-file data store — no database setup required, and no native modules to compile. Swap `src/db.js` for a real database later without touching the routes.
@@ -37,7 +37,7 @@ The API runs on `http://localhost:4000` by default.
 | GET | `/api/clubs?search=&category=` | List clubs, optionally filtered by free-text search and/or category |
 | GET | `/api/clubs/categories` | List distinct category names |
 | GET | `/api/clubs/club-of-the-month` | Get the current spotlighted club |
-| GET | `/api/clubs/stats` | Get active club count, category count, total student count |
+| GET | `/api/clubs/stats` | Get live active club, category, student, and suggestion counts |
 | GET | `/api/clubs/:id` | Get a single club's details |
 
 Example:

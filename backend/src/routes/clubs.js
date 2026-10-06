@@ -46,7 +46,7 @@ router.get("/club-of-the-month", (req, res) => {
 });
 
 // GET /api/clubs/stats
-// Powers the "12+ Active Clubs / 4 Categories / 500+ Students" banner.
+// Powers the live club, category, student, and suggestion counts.
 router.get("/stats", (req, res) => {
   const clubs = db.getAllClubs();
   const totalStudents = clubs.reduce(
@@ -58,6 +58,7 @@ router.get("/stats", (req, res) => {
     activeClubs: clubs.length,
     categories: db.getCategories().length,
     students: totalStudents,
+    suggestions: db.getAllSuggestions().length,
   });
 });
 
