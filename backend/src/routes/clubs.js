@@ -23,7 +23,8 @@ router.get("/", (req, res) => {
       (club) =>
         club.name.toLowerCase().includes(term) ||
         club.description.toLowerCase().includes(term) ||
-        club.category.toLowerCase().includes(term)
+        club.category.toLowerCase().includes(term) ||
+        (club.tags || []).some((tag) => tag.toLowerCase().includes(term))
     );
   }
 
