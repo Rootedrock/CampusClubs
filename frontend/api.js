@@ -11,13 +11,21 @@
 const API_BASE_URL = "https://campusclubs-w3gp.onrender.com";
 
 async function apiRequest(path, options = {}) {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    let response;
+    try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
         headers: {
             "Content-Type": "application/json",
             ...(options.headers || {})
         },
-        ...options
+        ...options,
+        signal: controller.signal
     });
+    } finally {
+        window.clearTimeout(timeout);
+    }
 
     let data = {};
     try {
@@ -40,7 +48,20 @@ async function getClubs({ search = "", category = "" } = {}) {
     if (category && category !== "all") params.set("category", category);
 
     const query = params.toString();
-    return apiRequest(`/api/clubs${query ? `?${query}` : ""}`);
+    const data = await apiRequest(`/api/clubs${query ? `?${query}` : ""}`);
+    if (!query) {
+        try { localStorage.setItem("campusclubs.clubs", JSON.stringify(data.clubs || [])); } catch { /* storage may be unavailable */ }
+    }
+    return data;
+}
+
+function getCachedClubs() {
+    try { return JSON.parse(localStorage.getItem("campusclubs.clubs") || "null"); }
+    catch { return null; }
+}
+
+async function getClub(id) {
+    return apiRequest(`/api/clubs/${encodeURIComponent(id)}`);
 }
 
 async function getClubOfTheMonth() {
