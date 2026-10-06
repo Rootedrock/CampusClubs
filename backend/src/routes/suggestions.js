@@ -6,8 +6,9 @@ const requireAdmin = require("../middleware/requireAdmin");
 
 const router = express.Router();
 
-const VALID_CATEGORIES = ["Technical", "Cultural", "Sports", "Social"];
+const VALID_CATEGORIES = ["Technical", "Cultural", "Sports", "Social", "Academic", "Arts", "Volunteering", "Entrepreneurship"];
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const attempts = new Map();
 
 function validateSuggestionPayload(body) {
   const errors = [];
@@ -28,6 +29,18 @@ function validateSuggestionPayload(body) {
 // POST /api/suggestions
 // Powers the "Suggest a Club" form submission.
 router.post("/", (req, res) => {
+  // Honeypot: accept silently so automated form fillers do not learn the field name.
+  if (String(req.body?.website || "").trim()) {
+    return res.status(201).json({ message: "Thanks for helping improve the campus directory." });
+  }
+
+  const now = Date.now();
+  const ip = req.ip || req.socket.remoteAddress || "unknown";
+  const recent = (attempts.get(ip) || []).filter((at) => now - at < 60_000);
+  if (recent.length >= 5) throw new ApiError(429, "Too many suggestions. Please try again in a minute.");
+  recent.push(now);
+  attempts.set(ip, recent);
+
   const { errors, clean } = validateSuggestionPayload(req.body || {});
 
   if (errors.length > 0) {

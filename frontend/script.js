@@ -45,12 +45,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.getElementById("nav-links");
 
     mobileToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
+        const isOpen = navLinks.classList.toggle("active");
+        mobileToggle.setAttribute("aria-expanded", String(isOpen));
+        mobileToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
     });
 
     navLinks.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", () => {
             navLinks.classList.remove("active");
+            mobileToggle.setAttribute("aria-expanded", "false");
+            mobileToggle.setAttribute("aria-label", "Open navigation");
         });
     });
 
@@ -62,9 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const clubGrid = document.getElementById("club-grid");
     const noResults = document.getElementById("no-results");
 
-    let activeCategory = "all";
-    let searchTerm = "";
+    const params = new URLSearchParams(location.hash.split("?")[1] || "");
+    let activeCategory = params.get("category") || "all";
+    let searchTerm = params.get("search") || "";
+    let meetingDay = params.get("day") || "all";
+    let sortOrder = params.get("sort") || "popular";
     let currentClubs = [];
+    searchInput.value = searchTerm;
+    document.getElementById("meeting-filter").value = meetingDay === "all" ? "all" : meetingDay;
+    document.getElementById("sort-filter").value = sortOrder;
+    filterButtons.forEach((button) => button.classList.toggle("active", button.dataset.category === activeCategory));
+    document.querySelector("#club-dialog .dialog-close").addEventListener("click", () => document.getElementById("club-dialog").close());
+    document.getElementById("club-dialog").addEventListener("click", (event) => { if (event.target === event.currentTarget) event.currentTarget.close(); });
 
     const categoryIcons = {
         Technical: "code-2",
@@ -127,6 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     </span>
                 </div>
 
+                ${(club.tags || []).length ? `<div class="club-tags">${club.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+
                 <button class="club-link" type="button" data-club-id="${escapeHtml(club.id)}">
                     View Club
                     <i data-lucide="arrow-up-right"></i>
@@ -137,6 +152,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderClubs(clubs) {
         currentClubs = clubs;
+        clubs = clubs.filter((club) => {
+            const matchesCategory = activeCategory === "all" || club.category.toLowerCase() === activeCategory.toLowerCase();
+            const haystack = `${club.name} ${club.description} ${club.category} ${(club.tags || []).join(" ")}`.toLowerCase();
+            return matchesCategory && (!searchTerm || haystack.includes(searchTerm.toLowerCase()));
+        });
+        clubs = clubs.filter((club) => meetingDay === "all" || (club.meetingDay || "").toLowerCase() === meetingDay.toLowerCase());
+        clubs.sort((a, b) => sortOrder === "az" ? a.name.localeCompare(b.name) : sortOrder === "newest" ? new Date(b.createdAt || 0) - new Date(a.createdAt || 0) : (b.memberCount || 0) - (a.memberCount || 0));
 
         if (!clubs.length) {
             clubGrid.innerHTML = "";
@@ -170,45 +192,80 @@ document.addEventListener("DOMContentLoaded", () => {
     function showClubDetails(club) {
         // Simple details dialog using the existing page design.
         // No extra CSS is required.
-        const message = [
-            club.name,
-            "",
-            `Category: ${club.category}`,
-            `Meeting: ${club.meetingDay || "TBA"} at ${club.meetingTime || "TBA"}`,
-            `Members: ${club.memberCount ?? "N/A"}`,
-            "",
-            club.description
-        ].join("\n");
-
-        alert(message);
+        getClub(club.id).then(({ club: details }) => {
+            const dialog = document.getElementById("club-dialog");
+            const content = dialog.querySelector(".club-dialog-content");
+            const join = details.joinUrl || details.contactEmail || details.instagram || details.discord || details.whatsapp;
+            const joinHref = details.joinUrl || (details.contactEmail ? `mailto:${details.contactEmail}` : details.instagram || details.discord || details.whatsapp || "");
+            content.innerHTML = `<p class="section-label">${escapeHtml(details.category)}</p><h2 id="club-dialog-title">${escapeHtml(details.name)}</h2><p>${escapeHtml(details.description)}</p><dl><dt>Meeting</dt><dd>${escapeHtml(details.meetingDay || "To be announced")} · ${escapeHtml(details.meetingTime || "To be announced")}</dd><dt>Members</dt><dd>${escapeHtml(details.memberCount ?? "Not listed")}</dd><dt>Location</dt><dd>${escapeHtml(details.location || "Not listed")}</dd><dt>Who can join</dt><dd>${escapeHtml(details.eligibility || "Open to ask the club")}</dd><dt>Fee</dt><dd>${escapeHtml(details.fee || "Not listed")}</dd></dl>${join ? `<a class="btn btn-primary" target="_blank" rel="noopener" href="${escapeHtml(joinHref)}">How to join</a>` : `<p class="join-missing">Contact details have not been added yet. Suggest an update below.</p>`}`;
+            dialog.showModal();
+        }).catch(() => {
+            document.getElementById("club-dialog").showModal();
+            document.querySelector(".club-dialog-content").innerHTML = `<h2>${escapeHtml(club.name)}</h2><p>${escapeHtml(club.description)}</p><p>More club details are unavailable while the backend is offline.</p>`;
+        });
     }
 
     async function loadClubs() {
         try {
             clubGrid.style.opacity = "0.6";
+            document.getElementById("directory-status").textContent = "Loading clubs…";
 
-            const data = await getClubs({
-                search: searchTerm,
-                category: activeCategory
-            });
+            syncDirectoryUrl();
+            const data = await getClubs({ search: searchTerm, category: activeCategory });
 
             renderClubs(data.clubs || []);
+            document.getElementById("directory-status").textContent = "";
         } catch (error) {
             console.error("Could not load clubs:", error);
+            const cached = getCachedClubs();
+            if (cached?.length) {
+                renderClubs(cached);
+                document.getElementById("directory-status").textContent = "Showing saved club listings; live updates are temporarily unavailable.";
+                return;
+            }
 
-            clubGrid.innerHTML = `
-                <div class="no-results">
-                    <i data-lucide="wifi-off"></i>
-                    <h3>Unable to load clubs</h3>
-                    <p>Please make sure the CampusClubs backend is running.</p>
-                </div>
-            `;
+            const cards = [...clubGrid.querySelectorAll(".club-card")];
+            if (cards.length) {
+                cards.forEach((card) => {
+                    const text = `${card.dataset.name} ${card.textContent}`.toLowerCase();
+                    const matchesCategory = activeCategory === "all" || card.dataset.category === activeCategory;
+                    const matchesSearch = !searchTerm || text.includes(searchTerm.toLowerCase());
+                    card.hidden = !(matchesCategory && matchesSearch);
+                });
+                noResults.classList.toggle("hidden", cards.some((card) => !card.hidden));
+                const notice = document.getElementById("directory-status");
+                notice.textContent = "Showing saved club listings. Live search is temporarily unavailable.";
+            } else {
+                clubGrid.innerHTML = `<div class="no-results"><i data-lucide="wifi-off"></i><h3>Unable to load clubs</h3><p>Showing saved listings when available. Please try again shortly.</p></div>`;
+                lucide.createIcons();
+            }
 
-            noResults.classList.add("hidden");
-            lucide.createIcons();
+            // Static HTML cards remain usable when opened directly as file://.
+            clubGrid.querySelectorAll(".club-card .club-link").forEach((button) => {
+                if (button.closest(".club-card")?.dataset.clubId) return;
+                if (button.dataset.fallbackBound) return;
+                button.dataset.fallbackBound = "true";
+                button.addEventListener("click", () => {
+                    const card = button.closest(".club-card");
+                    const title = card.querySelector("h3")?.textContent || "Club";
+                    const description = card.querySelector("p")?.textContent || "";
+                    const meeting = [...card.querySelectorAll(".card-info span")].map((item) => item.textContent.trim()).join(" · ");
+                    document.querySelector(".club-dialog-content").innerHTML = `<h2 id="club-dialog-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p><p>${escapeHtml(meeting)}</p><p>Contact details have not been added yet.</p>`;
+                    document.getElementById("club-dialog").showModal();
+                });
+            });
         } finally {
             clubGrid.style.opacity = "1";
         }
+    }
+
+    function syncDirectoryUrl() {
+        const query = new URLSearchParams();
+        if (activeCategory !== "all") query.set("category", activeCategory);
+        if (searchTerm) query.set("search", searchTerm);
+        if (meetingDay !== "all") query.set("day", meetingDay);
+        if (sortOrder !== "popular") query.set("sort", sortOrder);
+        history.replaceState(null, "", `${location.pathname}${location.search}#directory${query.size ? `?${query}` : ""}`);
     }
 
     // Search against the backend.
@@ -223,6 +280,13 @@ document.addEventListener("DOMContentLoaded", () => {
         searchTimer = setTimeout(loadClubs, 250);
     });
 
+    document.addEventListener("keydown", (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+            event.preventDefault();
+            searchInput.focus();
+        }
+    });
+
     // Category filter.
     filterButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -230,10 +294,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             button.classList.add("active");
             activeCategory = button.dataset.category;
+            syncDirectoryUrl();
 
             loadClubs();
         });
     });
+
+    document.getElementById("meeting-filter").addEventListener("change", (event) => { meetingDay = event.target.value; loadClubs(); });
+    document.getElementById("sort-filter").addEventListener("change", (event) => { sortOrder = event.target.value; loadClubs(); });
 
     // =========================================================
     // 4. LIVE STATS FROM BACKEND
@@ -244,9 +312,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const stats = document.querySelectorAll(".hero-stats .stat strong");
 
-            if (stats[0]) stats[0].textContent = `${data.activeClubs}+`;
+            if (stats[0]) stats[0].textContent = data.activeClubs;
             if (stats[1]) stats[1].textContent = data.categories;
-            if (stats[2]) stats[2].textContent = `${data.students}+`;
+            if (stats[2]) stats[2].textContent = data.students;
+            if (stats[3]) stats[3].textContent = data.suggestions ?? "—";
         } catch (error) {
             console.error("Could not load stats:", error);
             // Keep the HTML values if the backend is unavailable.
@@ -386,8 +455,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 clubName,
                 email,
                 category: formattedCategory,
-                reason: description
+                reason: description,
+                website: document.getElementById("website").value
             });
+
+            await loadStats();
 
             suggestForm.reset();
             suggestForm.classList.add("hidden");
@@ -460,4 +532,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initializeCampusClubs();
+
+    // Refresh shared counters while the page is open so submissions from
+    // other visitors appear without requiring a page reload.
+    window.setInterval(() => {
+        if (!document.hidden) loadStats();
+    }, 15000);
 });

@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CampusClubs | Student Club Directory</title>
+    <meta name="description" content="Discover student clubs, meeting times and ways to get involved on campus.">
+    <meta property="og:title" content="CampusClubs | Student Club Directory">
+    <meta property="og:description" content="Find your people. Explore campus clubs and discover new interests.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="images/logo.png" type="image/png">
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,6 +74,8 @@
                     id="mobile-toggle"
                     class="mobile-btn"
                     aria-label="Open navigation"
+                    aria-expanded="false"
+                    aria-controls="nav-links"
                 >
                     <i data-lucide="menu"></i>
                 </button>
@@ -118,22 +125,29 @@
             <div class="hero-stats">
 
                 <div class="stat">
-                    <strong>12+</strong>
+                    <strong aria-live="polite">—</strong>
                     <span>Active Clubs</span>
                 </div>
 
                 <div class="stat-divider"></div>
 
                 <div class="stat">
-                    <strong>4</strong>
+                    <strong aria-live="polite">—</strong>
                     <span>Categories</span>
                 </div>
 
                 <div class="stat-divider"></div>
 
                 <div class="stat">
-                    <strong>500+</strong>
+                    <strong aria-live="polite">—</strong>
                     <span>Students</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat">
+                    <strong aria-live="polite">—</strong>
+                    <span>Suggestions</span>
                 </div>
 
             </div>
@@ -178,6 +192,7 @@
                         <input
                             type="text"
                             id="search-input"
+                            aria-label="Search clubs by name, description, or category"
                             placeholder="Search clubs..."
                             autocomplete="off"
                         >
@@ -232,6 +247,16 @@
                     </button>
 
                 </div>
+
+                <div class="directory-controls">
+                    <label>Meeting day
+                        <select id="meeting-filter"><option value="all">Any day</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
+                    </label>
+                    <label>Sort by
+                        <select id="sort-filter"><option value="popular">Most members</option><option value="az">A–Z</option></select>
+                    </label>
+                </div>
+                <p id="directory-status" class="directory-status" aria-live="polite"></p>
 
 
                 <!-- Club Grid -->
@@ -634,6 +659,7 @@
                     <p>
                         Try a different search term or category.
                     </p>
+                    <a class="btn btn-secondary" href="#suggest">Can't find your club? Suggest it</a>
 
                 </div>
 
@@ -753,6 +779,7 @@
 
 
                     <form id="suggest-form" class="suggest-form">
+                        <p class="privacy-note">Your email is stored with this suggestion and visible to directory administrators so they can review it.</p>
 
                         <div class="form-group">
 
@@ -806,8 +833,17 @@
                                 <option value="cultural">Cultural</option>
                                 <option value="sports">Sports</option>
                                 <option value="social">Social</option>
+                                <option value="academic">Academic</option>
+                                <option value="arts">Arts</option>
+                                <option value="volunteering">Volunteering</option>
+                                <option value="entrepreneurship">Entrepreneurship</option>
                             </select>
 
+                        </div>
+
+                        <div class="honeypot" aria-hidden="true">
+                            <label for="website">Leave this field empty</label>
+                            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
                         </div>
 
 
@@ -1022,6 +1058,11 @@
 
     </main>
 
+    <dialog id="club-dialog" class="club-dialog" aria-labelledby="club-dialog-title">
+        <button class="dialog-close" type="button" aria-label="Close club details">×</button>
+        <div class="club-dialog-content"></div>
+    </dialog>
+
 
     <!-- ================= FOOTER ================= -->
     <footer class="footer">
@@ -1050,8 +1091,8 @@
 
 
     <!-- JavaScript -->
-    <script src="api.js"></script>
-    <script src="script.js"></script>
+    <script src="api.js?v=20261006"></script>
+    <script src="script.js?v=20261006"></script>
 
 </body>
 </html>
