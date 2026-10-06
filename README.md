@@ -56,10 +56,10 @@ frontend/
 
 ### Running locally
 
-No build step needed — clone the repo and open `index.html` directly in a browser, or serve it with any static server, e.g.:
+No build step needed — the app's entry point is `frontend/index.html`. To run locally, serve the frontend folder:
 
 ```bash
-npx serve .
+npx serve frontend
 ```
 
 ---
@@ -91,7 +91,7 @@ The API runs on `http://localhost:4000` by default.
 | Variable        | Description                                                              |
 |------------------|---------------------------------------------------------------------------|
 | `PORT`           | Port the server listens on (default `4000`)                              |
-| `CORS_ORIGINS`   | Comma-separated list of origins allowed to call the API. Add your GitHub Pages origin (`https://rootedrock.github.io`) here for the live site to work. |
+| `CORS_ORIGINS`   | Comma-separated origins allowed to call the API. The example includes GitHub Pages and the local preview origins (`localhost` and `127.0.0.1` on port 8000). |
 | `ADMIN_API_KEY`  | Shared secret required (via `x-api-key` header) to view/delete suggestions |
 
 ### API reference
@@ -173,13 +173,9 @@ backend/
 └── .env.example
 ```
 
-### Connecting the existing frontend
+### Frontend connection
 
-The current site is static HTML/JS on GitHub Pages, so it isn't calling any API yet. To wire it up:
-
-1. Deploy this backend somewhere reachable over HTTPS (Render, Railway, Fly.io, a VPS, etc.).
-2. Add that deployed origin — and `https://rootedrock.github.io` — to `CORS_ORIGINS`.
-3. In the frontend JS, replace the hard-coded club array with a `fetch('https://your-api-domain/api/clubs')` call, and point the suggestion form's submit handler at `POST https://your-api-domain/api/suggestions`.
+The frontend in `frontend/` calls the deployed API configured in `frontend/api.js`. Keep the API's `CORS_ORIGINS` setting aligned with the origins that serve the frontend. The current Render configuration allows `https://rootedrock.github.io`, `http://localhost:8000`, and `http://127.0.0.1:8000`. The example values are documented in `backend/.env.example`; update the Render service settings when the allowed origins change.
 
 ### Notes on the JSON-file store
 

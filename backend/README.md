@@ -25,7 +25,7 @@ The API runs on `http://localhost:4000` by default.
 | Variable        | Description                                                              |
 |------------------|---------------------------------------------------------------------------|
 | `PORT`           | Port the server listens on (default `4000`)                              |
-| `CORS_ORIGINS`   | Comma-separated list of origins allowed to call the API. Add your GitHub Pages origin (`https://rootedrock.github.io`) here for the live site to work. |
+| `CORS_ORIGINS`   | Comma-separated list of origins allowed to call the API. The example includes GitHub Pages and local previews at `localhost:8000` and `127.0.0.1:8000`. Keep the Render service's value in sync with the origins you use. |
 | `ADMIN_API_KEY`  | Shared secret required (via `x-api-key` header) to view/delete suggestions |
 
 ## API reference
@@ -107,13 +107,11 @@ campusclubs-backend/
 └── .env.example
 ```
 
-## Connecting the existing frontend
+## Frontend connection
 
-The current site is static HTML/JS on GitHub Pages, so it isn't calling any API yet. To wire it up:
+The frontend in `../frontend/` calls the deployed API configured in `frontend/api.js`. `CORS_ORIGINS` must include the frontend's origin. For the current deployment, the Render service allows `https://rootedrock.github.io`, `http://localhost:8000`, and `http://127.0.0.1:8000` so the live site and local preview can call it.
 
-1. Deploy this backend somewhere reachable over HTTPS (Render, Railway, Fly.io, a VPS, etc.).
-2. Add that deployed origin — and `https://rootedrock.github.io` — to `CORS_ORIGINS`.
-3. In the frontend JS, replace the hard-coded club array with a `fetch('https://your-api-domain/api/clubs')` call, and point the suggestion form's submit handler at `POST https://your-api-domain/api/suggestions`.
+When changing origins, update `CORS_ORIGINS` in the Render service settings and in `.env` for local backend development. `.env.example` documents the expected value; it does not update Render automatically.
 
 ## Notes on the JSON-file store
 

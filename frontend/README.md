@@ -27,19 +27,21 @@ A student club directory that lets new students browse, search, and filter campu
 
 ```
 CampusClubs/
-├── index.html   # Page structure and content (all club data is hardcoded here)
-├── style.css    # All styling, including light/dark theme variables and responsive breakpoints
-├── script.js    # Theme toggle, mobile nav, filtering/search, FAQ accordion, form validation
-├── logo.png     # Site logo, used in the navbar and footer
-└── README.md
+└── frontend/
+    ├── index.html   # Page structure and content
+    ├── style.css    # Styling, themes, and responsive breakpoints
+    ├── script.js    # Theme toggle, mobile nav, API integration, and UI interactions
+    ├── api.js       # Backend API connector
+    ├── images/logo.png
+    └── README.md
 ```
 
 ## Running locally
 
-No build step needed — clone the repo and open `index.html` directly in a browser, or serve it with any static server, e.g.:
+No build step needed — serve this folder directly, or open its `index.html` in a browser. From the repository root, run:
 
 ```bash
-npx serve .
+npx serve frontend
 ```
 
 ## Implementation notes
